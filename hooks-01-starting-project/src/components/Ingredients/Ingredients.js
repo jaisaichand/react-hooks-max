@@ -1,29 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import IngredientForm from './IngredientForm';
 import Search from './Search';
 import IngredientList from './IngredientList';
 
-function Ingredients() {
+function Ingredients(props) {
 
   const [ingredientState, updateIngredientState] = useState([])
   const [varOne, updatevarOne] = useState({ varOne: 'one' })
   const [varTwo, updatevarTwo] = useState({ varTwo: 'two' })
+  let reffbtn = useRef();
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/todos/1')
       .then(response => response.json())
       .then(json => updateIngredientState([json]))
-  }, [])
+
+    console.log(reffbtn.current)
+    return () => { console.log('funn') }
+  }
+    , [])
 
   useEffect(() => {
     console.log('varone')
   }, [varOne])
 
   useEffect(() => {
+
     console.log('both')
   }, [varOne, varTwo])
 
+  // useEffect(() => {    this will run this code infinite times, to overcome this, we should use UseCallback react hook
+  //   updatevarOne({ varOne: 'two' })
+  //   console.log('both')
+  // }, [varOne, varTwo])
 
   var onClickk = () => {
     if (varOne.varOne == 'one') {
@@ -31,6 +41,7 @@ function Ingredients() {
     } else {
       updatevarTwo({ varTwo: 'twooo' })
     }
+    props.closee();
   }
 
   const addIngredientHandler = (eve) => {
@@ -60,7 +71,7 @@ function Ingredients() {
     <div className="App">
       <IngredientForm onUpdate={addIngredientHandler} />
 
-      <button onClick={onClickk}>clickk</button>
+      <button ref={reffbtn} onClick={onClickk}>clickk</button>
       <section>
         <Search />
         <IngredientList onRemoveItem={removeIngredientHandler} ingredients={ingredientState} />

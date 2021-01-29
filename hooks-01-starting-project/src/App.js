@@ -2,8 +2,17 @@ import React from 'react';
 
 import Ingredients from './components/Ingredients/Ingredients';
 
-const App = props => {
-  return <Ingredients />;
-};
+class App extends React.Component {
+  state = { val: true };
+
+  closee = () => {
+    this.setState({ val: false })
+  }
+  render() {
+
+
+    return (<div>{this.state.val == true ? <Ingredients closee={this.closee} /> : null}</div>)
+  }
+}
 
 export default App;
