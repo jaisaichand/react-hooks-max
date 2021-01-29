@@ -7,10 +7,9 @@ class App extends React.Component {
 
   closee = () => {
     this.setState({ val: false })
+    console.log('...')
   }
   render() {
-
-
     return (<div>{this.state.val == true ? <Ingredients closee={this.closee} /> : null}</div>)
   }
 }
